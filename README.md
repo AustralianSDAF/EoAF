@@ -35,31 +35,24 @@ You can view a static visualisation of NDVI, NDMI and NBR as captured by Sentine
 
 For an interactive visualisation, you can download the *sample/demo_sentinel_2.html* file in this repository and view via your web browser.
 
+## Wiki
+An in-depth guide on the Eyes on Australian Forests repository can be found [here](https://github.com/AustralianSDAF/EoAF/wiki).
+
+# Quick Start
 ## Installation
 To use this repository, you will need to have conda setup on your machine. A recommended version of conda is [Miniforge](https://github.com/conda-forge/miniforge). Please follow the latest installation instructions found on the link provided.
 
 Once you have installed Miniforge, please download this repository and follow the below steps to install the environment.
 ```
-% cd Downloads/EOAF_Downloader
+% cd Downloads/EoAF
 % conda env create -f environment.yml
-% conda activate EOAF_Downloader
+% conda activate EoAF
 % poetry install --no-root
 ```
 
 ## Configuration
 Before proceeding, please confirm the download and processed directory paths for each satellite provider within `config.yaml` and update as required.
 By default, the data will be saved in the *data* directory located within this repository's working directory.
-
-## Bounding Box Coordinates and Shapefiles
-To use this repository, you will need to ensure that you have accurate bounding box coordinates or shapefiles for the areas you wish to analyse.
-
-### Bounding Box Coordinates
-A bounding box is defined by two points: the minimum latitude and longitude (min_lat, min_lon) representing the southwest corner of the box, and the maximum latitude and longitude (max_lat, max_lon) representing the northeast corner of the box.
-
-### Shapefiles
-Shapefiles provide a more precise and complex representation of geographic features. You can create shapefiles using Geographic Information System (GIS) software such as QGIS or ArcGIS, or via various online tools.
-
-Please store the shapefiles in the `shapefiles` directory within this repository.
 
 ## Usage
 ### WebUI (Basic)
@@ -101,9 +94,9 @@ Help documentation for the CLI can be accessed as follows.
 python src/viirs.py --help
 ```
 
+**Note: All three interfaces will store the downloaded and processed products in the previously configured directories. You may export these for use in other applications such as QGIS or ArcGIS.**
 
-Notes: Regardless of which interface used, the processed products can be found in the corresponding output directories as GeoTIFFS for usage in other applications. 
 
-## Additional Notes
+# Additional Notes
 1. Sentinel Australasia Region Access (SARA) is undertaking major upgrades to migrate to the new Copernicus Data Space Ecosystem (CDSE) platform from October 2023 to Mid 2024. Data access may be disrupted, with changes on how to access data during this period. It is hoped that Digital Earth Australia will account for this major change and their STAC API will remain accessible.
 2. As of 28th February 2024, AρρEEARS are currently experiencing a technical issue preventing AρρEEARS from correctly processing requests containing VIIRS version 2 data. As such, they have made the impacted products unavailable for selection and do not have an estimated time for when the issue will be fixed.
