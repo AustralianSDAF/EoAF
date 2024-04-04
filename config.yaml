@@ -1,0 +1,15 @@
+# Data Directories
+SENTINEL_RAW: "data/raw_data/sentinel_2"
+SENTINEL_EXTRACTED: "data/extracted_data/sentinel_2"
+SENTINEL_PROCESSED: "data/processed_data/sentinel_2"
+SENTINEL_VISUALISED: "data/visualised_data/sentinel_2"
+
+LANDSAT_RAW: "data/raw_data/landsat_8_9"
+LANDSAT_EXTRACTED: "data/extracted_data/landsat_8_9"
+LANDSAT_PROCESSED: "data/processed_data/landsat_8_9"
+LANDSAT_VISUALISED: "data/visualised_data/landsat_8_9"
+
+VIIRS_RAW: "data/raw_data/viirs"
+VIIRS_EXTRACTED: "data/extracted_data/viirs"
+VIIRS_PROCESSED: "data/processed_data/viirs"
+VIIRS_VISUALISED: "data/visualised_data/viirs"
