@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "EOAF_Downloader"
+name = "EoAF"
 version = "0.9.0"
 description = "Dependencies for Australian Space Data Analysis Facility - Eyes on Australian Forests repository."
 authors = ["Calvin Pang <calvin.pang@curtin.edu.au>"]

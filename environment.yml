@@ -1,4 +1,4 @@
-name: EOAF_Downloader
+name: EoAF
 channels:
   - conda-forge
 dependencies:
