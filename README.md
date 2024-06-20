@@ -106,7 +106,7 @@ python src/viirs.py --help
 
 **Note: All three interfaces will store the downloaded and processed products in the previously configured directories. You may export these for use in other applications such as QGIS or ArcGIS.**
 
-# Product naming conventions
+# Product Naming Conventions
 Once products have been downloaded, it is advised to keep the given naming conventions to maintain [data provenance](https://ardc.edu.au/resource/data-provenance/).  
 To assist in this:  
  - Sentinel 2 and Landsat naming conventions can be found [here](https://knowledge.dea.ga.gov.au/guides/reference/collection_3_naming/).  
