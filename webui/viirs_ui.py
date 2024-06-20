@@ -373,7 +373,7 @@ if __name__ == "__main__":
                     interactive=True,
                 )
                 percentile_selection = gr.Checkbox(
-                    label="Use percentiles for the colormap?", value=False
+                    label="Apply percentiles to potentially enhance contrast and improve image display?", value=False
                 )
 
             with gr.Row():

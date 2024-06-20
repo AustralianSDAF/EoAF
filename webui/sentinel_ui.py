@@ -441,7 +441,7 @@ if __name__ == "__main__":
 
             gr.Markdown("Please select visualisation options below.")
             with gr.Row():
-                resample_selection = gr.Checkbox(label="Apply downscaling?", value=True)
+                resample_selection = gr.Checkbox(label="Apply a downscaling factor to reduce the spatial resolution of product for rapid display?", value=True)
                 resample_factor = gr.Number(label="Downscaling Factor", value=6)
                 colormap_selection = gr.Radio(
                     label="Select a colormap",
@@ -450,7 +450,7 @@ if __name__ == "__main__":
                     interactive=True,
                 )
                 percentile_selection = gr.Checkbox(
-                    label="Use percentiles for the colormap?", value=False
+                    label="Apply percentiles to potentially enhance contrast and improve image display?", value=False
                 )
 
             with gr.Row():
