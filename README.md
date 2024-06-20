@@ -70,7 +70,7 @@ python webui/sentinel_ui.py
 
 
 ### WebUI (Basic, Windows)
-If you are on windows, once you have followed the installation steps above, to use the webUI  please instead run the following in the miniforge prompt:
+If you are on Windows, once you have followed the installation steps above, to use the webUI please instead run the following in the miniforge prompt:
 
 ```
 poetry run python webui\sentinel_ui.py
