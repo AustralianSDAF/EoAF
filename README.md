@@ -106,6 +106,12 @@ python src/viirs.py --help
 
 **Note: All three interfaces will store the downloaded and processed products in the previously configured directories. You may export these for use in other applications such as QGIS or ArcGIS.**
 
+# Product naming conventions
+Once products have been downloaded, it is advised to keep the given naming conventions to maintain [data provenance](https://ardc.edu.au/resource/data-provenance/).  
+To assist in this:  
+ - Sentinel 2 and Landsat naming conventions can be found [here](https://knowledge.dea.ga.gov.au/guides/reference/collection_3_naming/).  
+ - VIIRS naming conventions can be found [here](https://lpdaac.usgs.gov/data/get-started-data/collection-overview/missions/s-npp-nasa-viirs-overview/#viirs-naming-conventions).  
+
 
 # Additional Notes
 1. Sentinel Australasia Region Access (SARA) is undertaking major upgrades to migrate to the new Copernicus Data Space Ecosystem (CDSE) platform from October 2023 to Mid 2024. Data access may be disrupted, with changes on how to access data during this period. It is hoped that Digital Earth Australia will account for this major change and their STAC API will remain accessible.
