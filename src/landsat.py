@@ -110,12 +110,23 @@ class LandsatDownloaderTool(DEADownloaderTool):
         )
 
         # Print the latest aquisition date and the next aquisition date (approximately 8 days after the latest aquisition date)
+        flyover_wait = timedelta(days=8)
+        current_product_date = sorted_results[-1].datetime.date()
+        current_product_datetime = sorted_results[-1].datetime.replace(tzinfo=None)
         print(
-            f"Latest Landsat-8 or 9 product for the selected area of interest is {sorted_results[-1].properties['title']} on {sorted_results[-1].datetime.date()}."
+            f"Latest Landsat-8 or 9 product for the selected area of interest is {sorted_results[-1].properties['title']} on {current_product_date}."
         )
         print(
-            f"Next acquisition date for this product is approximately {sorted_results[-1].datetime.date() + timedelta(days=8)}.\n"
+            f"Next acquisition date for this product is approximately {current_product_date + flyover_wait}.\n"
         )
+        # Work out time untill flyover and print
+        S2_flyover_dif = (flyover_wait) + (current_product_datetime - datetime.now())
+        if S2_flyover_dif >= timedelta(days=0):
+            days_away_print_str = f"This is approximately  {S2_flyover_dif.days} days, {S2_flyover_dif.seconds//3600} hour(s) away (based on your system clock time of {datetime.now()}).\n"
+        else:
+            days_away_print_str = f"This is approximately  {S2_flyover_dif.days} days, {S2_flyover_dif.seconds//3600} hour(s) ago! (based on your system clock time of {datetime.now()}).\n"
+            days_away_print_str += "This is likely because the product hasnt been acquired and processed upstream yet. It usually takes 12-24 hours for acquisiton and processing to occur."
+        print(days_away_print_str)
 
     def download(
         self,
@@ -157,9 +168,7 @@ class LandsatDownloaderTool(DEADownloaderTool):
 
                 # Downloading from DEA
                 if not download_from_thredds:
-                    asset_url = asset_url.replace(
-                        "s3://dea-public-data", self.DEA_URL_HEADER
-                    )
+                    asset_url = asset_url.replace("s3://dea-public-data", self.DEA_URL_HEADER)
                 else:
                     asset_url = asset_url.replace(
                         "s3://dea-public-data/baseline", self.get_thredds_url_header()
@@ -180,9 +189,7 @@ class LandsatDownloaderTool(DEADownloaderTool):
                         miniters=1,
                         desc=asset_url.split("/")[-1],
                     ) as t:
-                        urllib.request.urlretrieve(
-                            asset_url, save_path, reporthook=t.update_to
-                        )
+                        urllib.request.urlretrieve(asset_url, save_path, reporthook=t.update_to)
 
 
 #####################################################################################################
@@ -192,9 +199,7 @@ class LandsatDownloaderTool(DEADownloaderTool):
 #####################################################################################################
 
 
-def process_product(
-    input_dir: Path, output_dir: Path, crop: bool, bbox: tuple, shapefile: Path
-):
+def process_product(input_dir: Path, output_dir: Path, crop: bool, bbox: tuple, shapefile: Path):
     """
     Processes a Landsat 8 or 9 product, calculating the NDVI, NDMI and NBR.
     Then saves the results as GeoTIFFs in the output directory.

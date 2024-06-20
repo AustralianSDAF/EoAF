@@ -110,12 +110,23 @@ class SentinelDownloaderTool(DEADownloaderTool):
         )
 
         # Print the latest aquisition date and the next aquisition date (approximately 5 days after the latest aquisition date)
+        S2_flyover_wait = timedelta(days=5)
+        S2_current_product_date = sorted_results[-1].datetime.date()
+        S2_current_product_datetime = sorted_results[-1].datetime.replace(tzinfo=None)
         print(
-            f"Latest Sentinel-2 product for the selected area of interest is {sorted_results[-1].properties['title']} on {sorted_results[-1].datetime.date()}."
+            f"Latest Sentinel-2 product for the selected area of interest is {sorted_results[-1].properties['title']} on {S2_current_product_date}."
         )
         print(
-            f"Next acquisition date for this product is approximately {sorted_results[-1].datetime.date() + timedelta(days=5)}.\n"
+            f"Next acquisition date for this product is approximately {S2_current_product_date + S2_flyover_wait}.\n"
         )
+        # Work out time untill flyover and print
+        S2_flyover_dif = (S2_flyover_wait) + (S2_current_product_datetime - datetime.now())
+        if S2_flyover_dif >= timedelta(days=0):
+            days_away_print_str = f"This is approximately  {S2_flyover_dif.days} days, {S2_flyover_dif.seconds//3600} hour(s) away (based on your system clock time of {datetime.now()}).\n"
+        else:
+            days_away_print_str = f"This is approximately  {S2_flyover_dif.days} days, {S2_flyover_dif.seconds//3600} hour(s) ago! (based on your system clock time of {datetime.now()}).\n"
+            days_away_print_str += "This is likely because the product hasnt been acquired and processed upstream yet. It usually takes 12-24 hours for acquisiton and processing to occur."
+        print(days_away_print_str)
 
     def download(
         self,
@@ -162,9 +173,7 @@ class SentinelDownloaderTool(DEADownloaderTool):
 
                 # Downloading from DEA
                 if not download_from_thredds:
-                    asset_url = asset_url.replace(
-                        "s3://dea-public-data", self.DEA_URL_HEADER
-                    )
+                    asset_url = asset_url.replace("s3://dea-public-data", self.DEA_URL_HEADER)
                 else:
                     asset_url = asset_url.replace(
                         "s3://dea-public-data/baseline", self.get_thredds_url_header()
@@ -185,9 +194,7 @@ class SentinelDownloaderTool(DEADownloaderTool):
                         miniters=1,
                         desc=asset_url.split("/")[-1],
                     ) as t:
-                        urllib.request.urlretrieve(
-                            asset_url, save_path, reporthook=t.update_to
-                        )
+                        urllib.request.urlretrieve(asset_url, save_path, reporthook=t.update_to)
 
 
 #####################################################################################################
@@ -197,9 +204,7 @@ class SentinelDownloaderTool(DEADownloaderTool):
 #####################################################################################################
 
 
-def process_product(
-    input_dir: Path, output_dir: Path, crop: bool, bbox: tuple, shapefile: Path
-):
+def process_product(input_dir: Path, output_dir: Path, crop: bool, bbox: tuple, shapefile: Path):
     """
     Processes a Sentinel-2 product, calculating the NDVI, NDMI and NBR.
     Then saves the results as GeoTIFFs in the output directory.
@@ -238,12 +243,8 @@ def process_product(
 
     # Calculating the NDVI, NDMI and NBR
     ndvi = (bands["nir"] - bands["red"]) / (bands["nir"] + bands["red"])
-    ndmi = (bands["narrow_nir"] - bands["swir_1"]) / (
-        bands["narrow_nir"] + bands["swir_1"]
-    )
-    nbr = (bands["narrow_nir"] - bands["swir_2"]) / (
-        bands["narrow_nir"] + bands["swir_2"]
-    )
+    ndmi = (bands["narrow_nir"] - bands["swir_1"]) / (bands["narrow_nir"] + bands["swir_1"])
+    nbr = (bands["narrow_nir"] - bands["swir_2"]) / (bands["narrow_nir"] + bands["swir_2"])
 
     # Opening metadata file
     with open(Path(input_dir, "metadata.json"), "r", encoding="utf-8") as f:
