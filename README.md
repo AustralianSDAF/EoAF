@@ -42,20 +42,22 @@ An in-depth guide on the Eyes on Australian Forests repository can be found [her
 ## Installation
 To use this repository, you will need to have conda setup on your machine. A recommended version of conda is [Miniforge](https://github.com/conda-forge/miniforge). Please follow the latest installation instructions found on the link provided.
 
-Once you have installed Miniforge, please download this repository and follow the below steps to install the environment.
+Once you have installed Miniforge, please download this repository (top-right code button) and follow the below steps in a terminal to install the environment (Mac & Linux).
 ```
-% cd Downloads/EoAF
+% cd <extracted folder, e.g. ~/Downloads/EoAF>
 % conda env create -f environment.yml
 % conda activate EoAF
 % poetry install --no-root
 ```
 
+On Windows, you will need to run these commands inside "Miniforge Prompt" (that you just installed from the link above) available from the start menu
+
 ## Configuration
 Before proceeding, please confirm the download and processed directory paths for each satellite provider within `config.yaml` and update as required.
 By default, the data will be saved in the *data* directory located within this repository's working directory.
 
-## Usage
-### WebUI (Basic)
+## Usage (Mac and Linux)
+### WebUI (Basic, Mac and Linux)
 A Gradio web interface is available for each satellite source for the basic downloading and processing of satellite products.
 Visualisations of the data can be generated and downloaded as HTML for viewing via a web browser.
 
@@ -64,6 +66,14 @@ The webUI can be launched as follows.
 **Sentinel-2 Example**
 ```
 python webui/sentinel_ui.py
+```
+
+
+### WebUI (Basic, Windows)
+If you are on windows, once you have followed the installation steps above, to use the webUI  please instead run the following in the miniforge prompt:
+
+```
+poetry run python webui\sentinel_ui.py
 ```
 
 ### Jupyter Notebooks (Intermediate)
